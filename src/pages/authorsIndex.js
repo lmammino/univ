@@ -6,16 +6,19 @@ export class AuthorsIndex extends Component {
   render ({ authors }, state) {
     return html`
     <div>
-      <h2>Books by author</h2>
-      <ul>${
+      <h2 class="text-center">Books by author</h2>
+      <div class="row">${
         authors.map(author =>
           html`
-          <li key=${author.id}>
-            <${Link} href=${`/author/${author.id}`}>${author.name}</>
-          </li>
+          <div class="col text-center" key=${author.id}>
+            <${Link} href=${`/author/${author.id}`}>
+              <img class="portrait" src="/authors/${author.picture}"/>
+              <p>${author.name}</p>
+            </>
+          </div>
           `
         )
-      }</ul>
+      }</div>
     </div>
     `
   }

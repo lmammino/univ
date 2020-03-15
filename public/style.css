@@ -1,0 +1,62 @@
+body {
+  background-color: #EEE2DC;
+}
+
+h1 a {
+  color: #C3073F;
+}
+
+a {
+  color: #123C69;
+  font-weight: bold;
+}
+
+.portrait {
+  border-radius: 10px;
+}
+
+.bio .portrait {
+  float: left;
+  margin: 0 1em 0 0;
+}
+
+.books {
+  list-style: none;
+}
+
+.books .book {
+  display: flex;
+  align-items: center;
+  margin: 1em 0 0 0;
+}
+
+.books .book .cover {
+  width: 120px;
+  text-align: center;
+}
+
+.books .book .info {
+  margin: 0 0 0 1em;
+}
+
+.books .book .info .title {
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 0 0 .4em 0;
+}
+
+.books .book .info p {
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  margin: 4em 0 0 0;
+  padding: 1em 0 1em 0;
+  border-top: 1px solid #BAB2B5;
+  color: #BAB2B5;
+}
+
+footer a {
+  color: #BAB2B5;
+}
