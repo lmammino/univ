@@ -37,8 +37,8 @@
     "url": "git+https://github.com/lmammino/univ.git"
   },
   "keywords": [],
-  "author": "Luciano Mammino",
-  "license": "ISC",
+  "author": "Luciano Mammino, Mario Casciaro",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lmammino/univ/issues"
   },

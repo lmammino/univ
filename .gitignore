@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+# publicly built JS fils
+public/main.js*
