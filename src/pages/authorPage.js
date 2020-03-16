@@ -1,37 +1,38 @@
-import { Component } from 'preact'
-import { html } from 'htm/preact'
+import react from 'react'
+const h = react.createElement
 
-export class AuthorPage extends Component {
-  render ({ author }, state) {
-    return html`
-    <div>
-      <h2 class="text-center">${author.name}</h2>
-      <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-          <p class="bio">
-            <img class="portrait" src="/authors/${author.picture}"/>
-            ${author.bio}
-          </p>
-        </div>
-        <div class="col-1"></div>
-      </div>
-
-      <h3 class="text-center">Books</h3>
-      <ul class="books">
-        ${author.books.map((book) =>
-          html`<li key=${book.id} class="book">
-            <div class="cover">
-              <img src="/covers/${book.cover}"/>
-            </div>
-            <div class="info">
-              <p class="title">${book.title}</p>
-              <p>${book.year}</p>
-            </div>
-          </li>`
-        )}
-      </ul>
-    </div>
-    `
+export class AuthorPage extends react.Component {
+  render () {
+    const { author } = this.props
+    return h('div', null,
+      h('h2', { className: 'text-center' }, author.name),
+      h('div', { className: 'row' },
+        h('div', { className: 'col-1' }),
+        h('div', { className: 'col-10' },
+          h('p', { className: 'bio' },
+            h('img', {
+              className: 'portrait',
+              src: `/public/authors/${author.picture}`
+            }),
+            author.bio
+          )
+        ),
+        h('div', { className: 'col-1' })
+      ),
+      h('h3', { className: 'text-center' }, 'Books'),
+      h('ul', { className: 'books' },
+        author.books.map((book) =>
+          h('li', { key: book.id, className: 'book' },
+            h('div', { className: 'cover' },
+              h('img', { src: `/public/covers/${book.cover}` })
+            ),
+            h('div', { className: 'info' },
+              h('p', { className: 'title' }, book.title),
+              h('p', null, book.year)
+            )
+          )
+        )
+      )
+    )
   }
 }

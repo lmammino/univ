@@ -1,5 +1,6 @@
-import { render } from 'preact'
-import { html } from 'htm/preact'
-import { App } from './app.js'
+import react from 'react'
+import reactDOM from 'react-dom'
+import { createApp } from './app.js'
 
-render(html`<${App}/>`, document.body)
+const h = react.createElement
+reactDOM.render(h(createApp(), null), document.getElementById('root'))

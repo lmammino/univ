@@ -1,15 +1,13 @@
-import { Component } from 'preact'
-import { html } from 'htm/preact'
-import { Link } from 'preact-router/match'
+import react from 'react'
+import Router from 'react-router-component'
+const h = react.createElement
 
-export class FourOhFourPage extends Component {
-  render ({ error }, state) {
-    return html`
-    <div>
-      <h2>404</h2>
-      <h3>${error || 'Page not found'}</h3>
-      <${Link} href="/">Go back to the home page</>
-    </div>
-    `
+export class FourOhFourPage extends react.Component {
+  render () {
+    return h('div', { className: 'text-center' },
+      h('h2', null, '404'),
+      h('h3', null, this.props.error || 'Page not found'),
+      h(Router.Link, { href: '/' }, 'Go back to the home page')
+    )
   }
 }
