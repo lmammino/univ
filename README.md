@@ -19,3 +19,11 @@ npm start
 ```
 
 Then point your browser to [localhost:3000](http://localhost:3000/).
+
+## Frontend only development
+
+```bash
+npm run dev:ui
+```
+
+Will start a `webpack-dev-server` session on [localhost:8080](http://localhost:8080/).
