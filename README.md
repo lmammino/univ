@@ -4,14 +4,16 @@ A simple "_Universal JavaScript_" application example using **Fastify** and **Re
 
 It is built to showcase the following principles:
 
- - Universal module loading
- - Universal rendering
- - Universal routing
- - Universal Data fetching (TODO)
+- Universal module loading
+- Universal rendering
+- Universal routing
+- Universal Data fetching (TODO)
 
 **It does not use webpack or babel on the server side and fully leverages Node.js ESM modules support!**
 
 ## Usage
+
+_You will need Node version >13_
 
 ```bash
 npm run build
