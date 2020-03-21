@@ -2,9 +2,10 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import react from 'react'
 import reactServer from 'react-dom/server.js'
-import { createApp } from './app.js'
 import fastify from 'fastify'
 import fastifyStatic from 'fastify-static'
+import { createApp } from './app.js'
+import { api } from './api.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -24,6 +25,8 @@ const template = (content) => `<!DOCTYPE html>
     <script type="text/javascript" src="/public/main.js"></script>
   </body>
 </html>`
+
+server.register(api, { prefix: '/api' })
 
 server.register(fastifyStatic, {
   root: resolve(__dirname, '..', 'public'),
