@@ -4,11 +4,12 @@ import react from 'react'
 import reactServer from 'react-dom/server.js'
 import fastify from 'fastify'
 import fastifyStatic from 'fastify-static'
-import { createApp } from './app.js'
+import { StaticRouter } from 'react-router-dom'
+import { App } from './frontend/app.js'
 import { api } from './api.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
+const h = react.createElement
 const server = fastify({ logger: true })
 
 const template = (content) => `<!DOCTYPE html>
@@ -35,8 +36,13 @@ server.register(fastifyStatic, {
 
 server.get('*', async (req, reply) => {
   const path = req.raw.originalUrl
-  const App = createApp(path)
-  const content = reactServer.renderToString(react.createElement(App))
+  const context = {}
+  const serverApp = h(StaticRouter, { path, context }, h(App))
+  const content = reactServer.renderToString(serverApp)
+
+  // TODO: Add here checks on the context to see 404s
+  // TODO: implement async data loading
+
   reply.type('text/html').send(template(content))
 })
 

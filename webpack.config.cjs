@@ -7,7 +7,7 @@ const HtmlWebpackRootPlugin = require('html-webpack-root-plugin')
 module.exports = function (env, argv) {
   const isProd = argv.mode === 'production'
   return {
-    entry: './src/index.js',
+    entry: './src/frontend/index.js',
     output: {
       filename: 'main.js',
       path: resolve(__dirname, 'public'),

@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "Universal JavaScript application example",
   "main": "index.js",
-  "type": "module",
   "dependencies": {
+    "esm": "^3.2.25",
     "fastify": "^2.13.0",
     "fastify-cli": "^1.5.0",
     "fastify-static": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-component": "^0.40.0"
+    "react-router-component": "^0.40.0",
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -33,7 +34,7 @@
   "scripts": {
     "build:frontend": "webpack --config webpack.config.cjs --mode production",
     "dev:ui": "webpack-dev-server --config webpack.config.cjs",
-    "start": "npm run build:frontend && node src/server.js",
+    "start": "npm run build:frontend && node -r esm ./src/server.js",
     "build": "npm run build:frontend",
     "test:lint": "eslint .",
     "test": "npm run test:lint"
