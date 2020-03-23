@@ -4,9 +4,10 @@
   "description": "Universal JavaScript application example",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "esm": "^3.2.25",
     "fastify": "^2.13.0",
-    "fastify-cli": "^1.5.0",
+    "fastify-cors": "^3.0.2",
     "fastify-static": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.1",
@@ -33,8 +35,10 @@
   },
   "scripts": {
     "build:frontend": "webpack --config webpack.config.cjs --mode production",
-    "dev:ui": "webpack-dev-server --config webpack.config.cjs",
-    "start": "npm run build:frontend && node -r esm ./src/server.js",
+    "dev:ui": "concurrently \"webpack-dev-server --config webpack.config.cjs\" \"npm run start:api\"",
+    "start:api": "node -r esm ./src/api.js",
+    "start:server": "node -r esm ./src/server.js",
+    "start": "npm run build:frontend && concurrently \"npm run start:api\" \"npm run start:server\"",
     "build": "npm run build:frontend",
     "test:lint": "eslint .",
     "test": "npm run test:lint"

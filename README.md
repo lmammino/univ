@@ -7,7 +7,7 @@ It is built to showcase the following principles:
 - Universal module loading
 - Universal rendering
 - Universal routing
-- Universal Data fetching (TODO)
+- Universal Data fetching
 
 **It does not use webpack or babel on the server side and fully leverages Node.js ESM modules support!**
 

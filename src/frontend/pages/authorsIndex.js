@@ -1,14 +1,15 @@
 import react from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { AsyncPage } from './asyncPage.js'
 import { Header } from '../components/header.js'
 import { Footer } from '../components/footer.js'
-import { authors } from '../../data/authors.js'
 const h = react.createElement
 
 export class AuthorsIndex extends AsyncPage {
   static async preloadAsyncData () {
-    return { authors }
+    const { data } = await axios.get('http://localhost:3001/api/authors')
+    return { authors: data }
   }
 
   render () {

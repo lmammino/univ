@@ -1,15 +1,11 @@
 import react from 'react'
+import axios from 'axios'
 import { AsyncPage } from './asyncPage.js'
 import { FourOhFourPage } from './fourOhFourPage.js'
 import { Header } from '../components/header.js'
 import { Footer } from '../components/footer.js'
-import { authors } from '../../data/authors.js'
 
 const h = react.createElement
-
-function findAuthor (authorId) {
-  return authors.find(author => author.id === authorId)
-}
 
 class NotFoundAuthor extends Error {
   constructor (authorId) {
@@ -22,12 +18,15 @@ class NotFoundAuthor extends Error {
 
 export class AuthorPage extends AsyncPage {
   static async preloadAsyncData (props) {
-    const author = findAuthor(props.match.params.authorId)
-    if (!author) {
-      throw new NotFoundAuthor(props.match.params.authorId)
+    try {
+      const { data } = await axios.get(`http://localhost:3001/api/authors/${props.match.params.authorId}`)
+      return data
+    } catch (err) {
+      if (err.response.status === 404) {
+        throw new NotFoundAuthor(props.match.params.authorId)
+      }
+      throw err
     }
-
-    return author
   }
 
   render () {

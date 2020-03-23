@@ -7,7 +7,6 @@ import fastifyStatic from 'fastify-static'
 import { StaticRouter, matchPath } from 'react-router-dom'
 import { App } from './frontend/app.js'
 import { routes } from './frontend/routes.js'
-import { api } from './api.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const h = react.createElement
@@ -19,6 +18,7 @@ const template = ({ content, serverData }) => `<!DOCTYPE html>
     <meta charset="UTF-8">
     <title>My library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
     <link href="/public/wing.css" rel="stylesheet">
     <link href="/public/style.css" rel="stylesheet">
   </head>
@@ -28,8 +28,6 @@ const template = ({ content, serverData }) => `<!DOCTYPE html>
     <script type="text/javascript" src="/public/main.js"></script>
   </body>
 </html>`
-
-server.register(api, { prefix: '/api' })
 
 server.register(fastifyStatic, {
   root: resolve(__dirname, '..', 'public'),

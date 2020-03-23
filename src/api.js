@@ -1,16 +1,30 @@
+import fastify from 'fastify'
+import fastifyCors from 'fastify-cors'
 import { authors } from './data/authors.js'
 
-export async function api (fastify, opts) {
-  fastify.get('/authors', async function (req, reply) {
-    return authors.map(({ id, name, picture }) => ({ id, name, picture }))
-  })
+const server = fastify({ logger: true })
 
-  fastify.get('/authors/:authorId', async function (req, reply) {
-    const author = authors.find(({ id }) => id === req.params.authorId)
-    if (!author) {
-      reply.code(404)
-      return { error: 'Author not found' }
-    }
-    return author
-  })
-}
+server.register(fastifyCors, { origin: true })
+
+server.get('/api/authors', async function (req, reply) {
+  return authors.map(({ id, name, picture }) => ({ id, name, picture }))
+})
+
+server.get('/api/authors/:authorId', async function (req, reply) {
+  const author = authors.find(({ id }) => id === req.params.authorId)
+  if (!author) {
+    reply.code(404)
+    return { error: 'Author not found' }
+  }
+  return author
+})
+
+const port = Number.parseInt(process.env.PORT) || 3001
+const address = process.env.ADDRESS || '127.0.0.1'
+
+server.listen(port, address, function (err, addr) {
+  if (err) {
+    console.error(err)
+    process.exit(1)
+  }
+})
