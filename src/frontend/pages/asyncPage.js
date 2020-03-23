@@ -1,39 +1,48 @@
 import react from 'react'
 
 export class AsyncPage extends react.Component {
-  static async loadData () {
-    throw new Error('Must implemented by sub class')
+  static async preloadAsyncData () {
+    throw new Error('Must be implemented by sub class')
   }
 
   constructor (props) {
     super(props)
-    const url = props.match.url
+    const location = props.match.url
     this.hasData = false
 
-    let data
+    let staticData
+    let staticError
 
-    if (typeof window !== 'undefined') {
-      // client side check for data passed from SSR
-      if (window.__ASYNC_DATA__ && window.__ASYNC_DATA__[url]) {
-        data = window.__ASYNC_DATA__[url]
-        this.hasData = true
-      }
-    } else {
-      // server side rendering: check for preloaded data
-      if (this.props.data) {
-        data = this.props.data
-        this.hasData = true
-      }
+    const staticContext = typeof window !== 'undefined'
+      ? window.__STATIC_CONTEXT__ // client side check for SSR preloaded data
+      : this.props.staticContext // server side check for SSR preloaded data
+
+    if (staticContext && staticContext[location]) {
+      const { data, err } = staticContext[location]
+      staticData = data
+      staticError = err
+      this.hasStaticData = true
+
+      // this allows us to re-fetch fresh data the next time we visit
+      // the same URL during the front end session
+      typeof window !== 'undefined' && delete staticContext[location]
     }
 
-    this.state = { data, loading: !this.hasData }
+    this.state = { staticData, staticError, loading: !this.hasStaticData }
   }
 
   async componentDidMount () {
     // browser only
-    if (!this.hasData) {
-      const data = await this.constructor.loadData(this.props)
-      this.setState({ loading: false, data })
+    if (!this.hasStaticData) {
+      let staticData
+      let staticError
+      try {
+        const data = await this.constructor.preloadAsyncData(this.props)
+        staticData = data
+      } catch (err) {
+        staticError = err
+      }
+      this.setState({ loading: false, staticData, staticError })
     }
   }
 

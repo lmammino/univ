@@ -55,16 +55,28 @@ server.get('*', async (req, reply) => {
     code = 404
   }
 
-  let data
-  if (typeof component.loadData === 'function') {
-    // TODO: implement error logic (WHAT IF FAILING THE ASYNC, e.g. author not found)
-    data = await component.loadData({ match })
+  let staticData
+  let staticError
+  let hasStaticContext = false
+  if (typeof component.preloadAsyncData === 'function') {
+    hasStaticContext = true
+    try {
+      const data = await component.preloadAsyncData({ match })
+      staticData = data
+    } catch (err) {
+      staticError = err
+    }
   }
 
-  const app = h(StaticRouter, { location, context: { data } }, h(App))
+  const staticContext = { [location]: { data: staticData, err: staticError } }
+  const app = h(StaticRouter, { location, context: staticContext }, h(App))
   const content = reactServer.renderToString(app)
-  const serverData = data ? `window.__ASYNC_DATA__=${JSON.stringify(data)}` : ''
+  const serverData = hasStaticContext ? `window.__STATIC_CONTEXT__=${JSON.stringify(staticContext)}` : ''
   const html = template({ content, serverData })
+
+  if (staticContext.statusCode) {
+    code = staticContext.statusCode
+  }
 
   reply.code(code).type('text/html').send(html)
 })

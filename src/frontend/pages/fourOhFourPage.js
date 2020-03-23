@@ -6,6 +6,12 @@ const h = react.createElement
 
 export class FourOhFourPage extends react.Component {
   render () {
+    // indicates SSR that this component was rendered so
+    // that the response status code can be set accordingly
+    if (this.props.staticContext) {
+      this.props.staticContext.statusCode = 404
+    }
+
     return h('div', { className: 'container' },
       h(Header),
       h('div', { className: 'text-center' },

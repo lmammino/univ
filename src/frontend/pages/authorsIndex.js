@@ -7,7 +7,7 @@ import { authors } from '../../data/authors.js'
 const h = react.createElement
 
 export class AuthorsIndex extends AsyncPage {
-  static async loadData () {
+  static async preloadAsyncData () {
     return { authors }
   }
 
@@ -21,7 +21,7 @@ export class AuthorsIndex extends AsyncPage {
           this.state.authors === null
             ? h('div', { className: 'text-center' }, 'Loading ...')
             : h('div', { className: 'row' },
-              this.state.data.authors.map(
+              this.state.staticData.authors.map(
                 (author) => h('div', { key: author.id, className: 'col text-center' },
                   h(Link, { to: `/author/${author.id}` },
                     h('img', { src: `/public/authors/${author.picture}` }),
