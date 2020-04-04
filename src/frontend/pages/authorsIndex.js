@@ -19,18 +19,16 @@ export class AuthorsIndex extends AsyncPage {
         ? h('div', { className: 'text-center' }, 'Loading ...')
         : h('div', null,
           h('h2', { className: 'text-center' }, 'Books by author'),
-          this.state.authors === null
-            ? h('div', { className: 'text-center' }, 'Loading ...')
-            : h('div', { className: 'row' },
-              this.state.staticData.authors.map(
-                (author) => h('div', { key: author.id, className: 'col text-center' },
-                  h(Link, { to: `/author/${author.id}` },
-                    h('img', { src: `/public/authors/${author.picture}` }),
-                    h('p', null, author.name)
-                  )
+          h('div', { className: 'row' },
+            this.state.staticData.authors.map(
+              (author) => h('div', { key: author.id, className: 'col text-center' },
+                h(Link, { to: `/author/${author.id}` },
+                  h('img', { src: `/public/authors/${author.picture}` }),
+                  h('p', null, author.name)
                 )
               )
             )
+          )
         ),
       h(Footer)
     )
