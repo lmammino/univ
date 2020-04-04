@@ -1,5 +1,5 @@
 import react from 'react'
-import Router from 'react-router-component'
+import { Link } from 'react-router-dom'
 import { Header } from '../components/header.js'
 import { Footer } from '../components/footer.js'
 const h = react.createElement
@@ -17,7 +17,7 @@ export class FourOhFourPage extends react.Component {
       h('div', { className: 'text-center' },
         h('h2', null, '404'),
         h('h3', null, this.props.error || 'Page not found'),
-        h(Router.Link, { href: '/' }, 'Go back to the home page')
+        h(Link, { to: '/' }, 'Go back to the home page')
       ),
       h(Footer)
     )
