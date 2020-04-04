@@ -13,6 +13,21 @@ module.exports = function (env, argv) {
       path: resolve(__dirname, 'public'),
       publicPath: '/'
     },
+    module: {
+      rules: [
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-transform-runtime']
+            }
+          }
+        }
+      ]
+    },
     devtool: isProd ? 'source-maps' : 'eval',
     devServer: {
       historyApiFallback: true,
