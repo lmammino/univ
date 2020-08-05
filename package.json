@@ -6,7 +6,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "esm": "^3.2.25",
-    "fastify": "^2.13.0",
+    "fastify": "^2.15.1",
     "fastify-cors": "^3.0.2",
     "fastify-static": "^2.6.0",
     "react": "^16.13.1",
